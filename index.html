@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Palacio de Justicia - Portal Completo del Reino</title>
+    <style>
+        :root {
+            --oro: #d4af37;
+            --oscuro: #111116;
+            --gris-panel: #1c1c24;
+            --blanco: #f5f5f5;
+            --rojo-reino: #8b0000;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--oscuro);
+            color: var(--blanco);
+            scroll-behavior: smooth;
+        }
+
+        /* Menú de Navegación Completo */
+        nav {
+            background-color: rgba(17, 17, 22, 0.95);
+            border-bottom: 2px solid var(--oro);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 10px 20px;
+        }
+
+        .menu {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            flex-wrap: wrap;
+        }
+
+        .menu li {
+            margin: 5px 12px;
+        }
+
+        .menu a {
+            color: var(--blanco);
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 13px;
+            transition: color 0.3s;
+        }
+
+        .menu a:hover {
+            color: var(--oro);
+        }
+
+        #nav-admin {
+            display: none; 
+            border: 1px dashed var(--oro);
+            padding: 0 5px;
+            border-radius: 4px;
+        }
+
+        /* Banner Principal con tus imágenes corregidas */
+        header {
+            text-align: center;
+            padding: 50px 20px;
+            background: linear-gradient(rgba(0,0,0,0.8), rgba(17, 17, 22, 0.95)), url('fondo.jpeg') no-repeat center/cover;
+            border-bottom: 2px solid var(--oro);
+        }
+
+        .logo-reino {
+            max-width: 140px;
+            height: auto;
+            border-radius: 50%;
+            border: 3px solid var(--oro);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+            margin-bottom: 15px;
+        }
+
+        header h1 {
+            color: var(--oro);
+            font-size: 3rem;
+            margin: 0 0 10px 0;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        section {
+            background-color: var(--gris-panel);
+            padding: 30px;
+            border-radius: 8px;
+            border: 1px solid #2a2a35;
+            margin-bottom: 40px;
+        }
+
+        h2 {
+            color: var(--oro);
+            border-bottom: 1px solid var(--oro);
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--oro);
+            font-size: 14px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            background-color: var(--oscuro);
+            border: 1px solid #444;
+            color: white;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .btn-grid {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            background-color: transparent;
+            color: var(--oro);
+            border: 2px solid var(--oro);
+            padding: 10px 18px;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        .btn:hover {
+            background-color: var(--oro);
+            color: var(--oscuro);
+        }
+
+        .btn-success { border-color: #2ecc71; color: #2ecc71; }
+        .btn-success:hover { background-color: #2ecc71; color: white; }
+        .btn-danger { border-color: #e74c3c; color: #e74c3c; }
+        .btn-danger:hover { background-color: #e74c3c; color: white; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #333;
+        }
+
+        th { color: var(--oro); }
+
+        .admin-section {
+            border: 2px solid var(--rojo-reino);
+            display: none; 
+        }
+
+        .document-box {
+            background: linear-gradient(135deg, #2c2c38, #111116);
+            border: 2px solid var(--oro);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            display: none;
+            max-width: 450px;
+        }
+
+        .status-badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .status-pendiente { background-color: #f39c12; color: white; }
+        .status-aprobado { background-color: #2ecc71; color: white; }
+        .status-rechazado { background-color: #e74c3c; color: white; }
+
+        @media print {
+            body * { visibility: hidden; }
+            .print-zone, .print-zone * { visibility: visible; }
+            .print-zone { position: absolute; left: 0; top: 0; width: 100%; color: black !important; background: white !important; padding: 20px; border: 2px solid black; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <ul class="menu">
+            <li><a href="#inicio">🏛 Inicio</a></li>
+            <li><a href="#cuenta">👤 Mi Cuenta</a></li>
+            <li><a href="#dni">🪪 DNI</a></li>
+            <li><a href="#pasaporte">🛂 Pasaporte</a></li>
+            <li><a href="#visa">🌍 Visa</a></li>
+            <li><a href="#citas">📅 Citas</a></li>
+            <li><a href="#permisos">📋 Permisos</a></li>
+            <li><a href="#biblioteca">🏛 Biblioteca</a></li>
+            <li><a href="#cronicas">📜 Historia</a></li>
+            <li><a href="#noticias">📢 Noticias</a></li>
+            <li id="nav-admin"><a href="#administracion" style="color: #ff4d4d;">👮 Admin</a></li>
+        </ul>
+    </nav>
+
+    <header id="inicio">
+        <img src="escudo.jpeg" alt="Escudo Real" class="logo-reino">
+        <h1>PALACIO DE JUSTICIA</h1>
+        <p><i>"Poder · Gloria · Justicia"</i></p>
+        <p>Identidad actual: <b id="current-user-display" style="color: var(--oro);">Invitado (Sin verificar)</b></p>
+    </header>
+
+    <div class="container">
+
+        <section id="cuenta">
+            <h2>👤 Registro e Inicio de Sesión</h2>
+            <p>Escribe tu nombre y tu correo. Si el correo coincide con el listado del administrador, se desbloquearán las funciones especiales.</p>
+            <div class="form-group">
+                <label for="reg-nombre">Nombre Completo:</label>
+                <input type="text" id="reg-nombre" placeholder="Tu nombre o personaje">
+            </div>
+            <div class="form-group">
+                <label for="reg-email">Correo Electrónico:</label>
+                <input type="email" id="reg-email" placeholder="ejemplo@gmail.com">
+            </div>
+            <div class="form-group">
+                <label for="reg-pass">Contraseña:</label>
+                <input type="password" id="reg-pass" placeholder="••••••••">
+            </div>
+            <div class="btn-grid">
+                <button class="btn" onclick="iniciarSesion()">Iniciar Sesión / Registrarse</button>
+                <button class="btn btn-danger" onclick="cerrarSesion()">Cerrar Sesión</button>
+            </div>
+        </section>
+
+        <section id="dni">
+            <h2>🪪 Sistema de DNI</h2>
+            <div class="form-group">
+                <label for="dni-origen">Lugar de Nacimiento:</label>
+                <select id="dni-origen">
+                    <option value="Suprema Esperanza">Suprema Esperanza</option>
+                    <option value="Santillación">Santillación</option>
+                    <option value="Yupilandia">Yupilandia</option>
+                </select>
+            </div>
+            <div class="btn-grid">
+                <button class="btn" onclick="solicitarDocumento('DNI', document.getElementById('dni-origen').value)">Solicitar DNI</button>
+                <button class="btn" onclick="descargarDoc('box-dni')">Descargar PDF</button>
+            </div>
+
+            <div id="box-dni" class="document-box print-zone">
+                <h3 style="color: var(--oro); margin:0;">REINO DE PALACIO DE JUSTICIA - DNI</h3>
+                <p><strong>Nombre:</strong> <span id="card-dni-nombre">---</span></p>
+                <p><strong>Lugar de Nacimiento:</strong> <span id="card-dni-origen">---</span></p>
+                <p><strong>Número:</strong> <span id="card-dni-num">---</span></p>
+                <p><strong>Estado:</strong> <span style="color:#2ecc71;">Válido</span></p>
+            </div>
+        </section>
+
+        <section id="pasaporte">
+            <h2>🛂 Sistema de Pasaportes</h2>
+            <div class="btn-grid">
+                <button class="btn" onclick="solicitarDocumento('Pasaporte', 'Soberanía Exterior')">Solicitar Pasaporte</button>
+                <button class="btn" onclick="descargarDoc('box-pasaporte')">Descargar Documento</button>
+            </div>
+
+            <div id="box-pasaporte" class="document-box print-zone">
+                <h3 style="color: var(--oro); margin:0;">PASAPORTE REAL</h3>
+                <p><strong>Titular:</strong> <span id="card-pas-nombre">---</span></p>
+                <p><strong>Código de Tránsito:</strong> <span id="card-pas-num">---</span></p>
+                <p><strong>Estado:</strong> <span style="color:#2ecc71;">Aprobado por el Ministerio</span></p>
+            </div>
+        </section>
+
+        <section id="visa">
+            <h2>🌍 Sistema de Visas</h2>
+            <div class="form-group">
+                <label for="visa-tipo">Tipo de Visa:</label>
+                <select id="visa-tipo">
+                    <option value="Turismo">Turismo</option>
+                    <option value="Trabajo">Trabajo</option>
+                    <option value="Diplomática">Diplomática</option>
+                    <option value="Residencia">Residencia</option>
+                </select>
+            </div>
+            <div class="btn-grid">
+                <button class="btn" onclick="solicitarDocumento('Visa', document.getElementById('visa-tipo').value)">Nueva Solicitud</button>
+            </div>
+        </section>
+
+        <section id="citas">
+            <h2>📅 Sistema de Citas</h2>
+            <div class="form-group">
+                <label for="cita-tramite">Trámite:</label>
+                <select id="cita-tramite">
+                    <option value="DNI">DNI</option>
+                    <option value="Pasaporte">Pasaporte</option>
+                    <option value="Visa">Visa</option>
+                    <option value="Permisos">Permisos</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="cita-fecha">Fecha y Hora:</label>
+                <input type="datetime-local" id="cita-fecha">
+            </div>
+            <div class="btn-grid">
+                <button class="btn" onclick="agendarCita()">Reservar Cita</button>
+            </div>
+        </section>
+
+        <section id="permisos">
+            <h2>📋 Sistema de Permisos</h2>
+            <div class="form-group">
+                <label for="permiso-tipo">Tipo de Permiso Requerido:</label>
+                <select id="permiso-tipo">
+                    <option value="Construcción">Construcción</option>
+                    <option value="Eventos">Eventos</option>
+                    <option value="Viajes">Viajes</option>
+                    <option value="Manifestaciones">Manifestaciones</option>
+                </select>
+            </div>
+            <div class="btn-grid">
+                <button class="btn" onclick="solicitarDocumento('Permiso', document.getElementById('permiso-tipo').value)">Solicitar Permiso</button>
+            </div>
+        </section>
+
+        <section id="biblioteca">
+            <h2>🏛 Biblioteca Nacional</h2>
+            <p>Consulta los documentos legales fundamentales del Palacio de Justicia.</p>
+            <ul>
+                <li><b>La Constitución Suprema:</b> "Ningún ciudadano ni rey está por encima de la justicia divina."</li>
+                <li><b>Decreto Imperial 01:</b> Fundación de Suprema Esperanza.</li>
+            </ul>
+        </section>
+
+        <section id="cronicas">
+            <h2>📜 Historia de Palacio de Justicia</h2>
+            <h3>Capítulo I: El Reino de la Justicia</h3>
+            <p>Mucho antes de las grandes plazas, el Rey Jesús fundó este reino para que imperara la ley. A su lado estuvo su leal servidor Jeampier...</p>
+            <h3>Capítulo X: La coronación de Jesús II</h3>
+            <p>"Juro proteger este reino y que el nombre del Rey Jesús jamás será olvidado", proclamó Jesús II al asumir la corona.</p>
+        </section>
+
+        <section id="noticias">
+            <h2>📢 Noticias Oficiales</h2>
+            <div id="bloque-noticias">
+                <p><b>[Último Decreto]:</b> Se declaran oficiales las fronteras regionales de Suprema Esperanza, Santillación y Yupilandia.</p>
+            </div>
+        </section>
+
+        <section id="administracion" class="admin-section">
+            <h2>👮 Panel de Administración (Control Total de Trámites)</h2>
+            <p>Consola para otorgar validez legal a las solicitudes del reino.</p>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Solicitante</th>
+                        <th>Tipo Trámite</th>
+                        <th>Detalle/Región</th>
+                        <th>Estado</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla-solicitudes">
+                    </tbody>
+            </table>
+        </section>
+
+    </div>
+
+    <script>
+        // ========================================================
+        // 🔒 AQUÍ CONFIGURAS LOS CORREOS QUE SERÁN ADMINISTRADORES
+        // ========================================================
+        const correosAdmins = [
+            "chachovschacho@gmail.com",
+            "reyll@palacio.com",
+            "Calvoelchico67@palacio.com"
+        ];
+
+        let solicitudes = [];
+        let usuarioLogueado = null;
+        let esAdmin = false;
+
+        function iniciarSesion() {
+            let nombre = document.getElementById("reg-nombre").value.trim();
+            let email = document.getElementById("reg-email").value.trim().toLowerCase(); // Fuerza minúsculas para evitar errores
+
+            if (!nombre || !email) {
+                alert("❌ Por favor, rellena tu nombre y correo para ingresar.");
+                return;
+            }
+
+            usuarioLogueado = { nombre: nombre, email: email };
+
+            // Comprobación exacta
+            if (correosAdmins.includes(email)) {
+                esAdmin = true;
+                document.getElementById("current-user-display").innerText = `${nombre} (ADMINISTRADOR 👮)`;
+                alert("👑 Credenciales de alta administración reconocidas correctamente.");
+            } else {
+                esAdmin = false;
+                document.getElementById("current-user-display").innerText = `${nombre} (Ciudadano 👤)`;
+                alert(`👤 Bienvenido al portal, ciudadano ${nombre}.`);
+            }
+
+            evaluarVistaAdmin();
+        }
+
+        function evaluarVistaAdmin() {
+            let panelNav = document.getElementById("nav-admin");
+            let panelSec = document.getElementById("administracion");
+
+            if (esAdmin) {
+                panelNav.style.display = "block";
+                panelSec.style.display = "block";
+            } else {
+                panelNav.style.display = "none";
+                panelSec.style.display = "none";
+            }
+            actualizarTablaAdmin();
+        }
+
+        function cerrarSesion() {
+            usuarioLogueado = null;
+            esAdmin = false;
+            document.getElementById("reg-nombre").value = "";
+            document.getElementById("reg-email").value = "";
+            document.getElementById("reg-pass").value = "";
+            document.getElementById("current-user-display").innerText = "Invitado (Sin verificar)";
+            evaluarVistaAdmin();
+            alert("Sesión finalizada.");
+        }
+
+        function solicitarDocumento(tipo, detalle) {
+            if (!usuarioLogueado) {
+                alert("❌ Debes Iniciar Sesión en la pestaña 'Mi Cuenta' antes de hacer trámites.");
+                return;
+            }
+
+            let nuevaPeticion = {
+                id: Date.now(),
+                usuario: usuarioLogueado.nombre,
+                tipo: tipo,
+                detalle: detalle,
+                estado: "Pendiente"
+            };
+
+            solicitudes.push(nuevaPeticion);
+            alert(`✅ Tu solicitud de ${tipo} (${detalle}) ha sido enviada a revisión.`);
+            actualizarTablaAdmin();
+        }
+
+        function agendarCita() {
+            let tramite = document.getElementById("cita-tramite").value;
+            let fecha = document.getElementById("cita-fecha").value;
+            if(!fecha) { alert("❌ Elige fecha y hora."); return; }
+            solicitarDocumento("Cita para " + tramite, fecha);
+        }
+
+        function actualizarTablaAdmin() {
+            let tbody = document.getElementById("tabla-solicitudes");
+            tbody.innerHTML = "";
+
+            if (solicitudes.length === 0) {
+                tbody.innerHTML = "<tr><td colspan='5'>No hay trámites pendientes.</td></tr>";
+                return;
+            }
+
+            solicitudes.forEach(sol => {
+                let badge = sol.estado === "Pendiente" ? "status-pendiente" : (sol.estado === "Aprobado" ? "status-aprobado" : "status-rechazado");
+                let fila = `<tr>
+                    <td><b>${sol.usuario}</b></td>
+                    <td>${sol.tipo}</td>
+                    <td>${sol.detalle}</td>
+                    <td><span class="status-badge ${badge}">${sol.estado}</span></td>
+                    <td>
+                        ${sol.estado === "Pendiente" ? `
+                            <button class="btn btn-success" onclick="resolverTramite(${sol.id}, 'Aprobado')">Aceptar</button>
+                            <button class="btn btn-danger" onclick="resolverTramite(${sol.id}, 'Rechazado')">Rechazar</button>
+                        ` : `<span style='color:#777;'>Cerrado</span>`}
+                    </td>
+                </tr>`;
+                tbody.innerHTML += fila;
+            });
+        }
+
+        function resolverTramite(id, estadoFinal) {
+            let sol = solicitudes.find(s => s.id === id);
+            if (sol) {
+                sol.estado = estadoFinal;
+                alert(`Trámite de ${sol.usuario} ha sido [${estadoFinal}]`);
+                actualizarTablaAdmin();
+                
+                if (estadoFinal === "Aprobado") {
+                    if (sol.tipo === "DNI") {
+                        document.getElementById("card-dni-nombre").innerText = sol.usuario;
+                        document.getElementById("card-dni-origen").innerText = sol.detalle;
+                        document.getElementById("card-dni-num").innerText = "PJ-" + (sol.id % 10000);
+                        document.getElementById("box-dni").style.display = "block";
+                    } else if (sol.tipo === "Pasaporte") {
+                        document.getElementById("card-pas-nombre").innerText = sol.usuario;
+                        document.getElementById("card-pas-num").innerText = "PASS-" + (sol.id % 10000);
+                        document.getElementById("box-pasaporte").style.display = "block";
+                    }
+                }
+            }
+        }
+
+        function descargarDoc(idCaja) {
+            let elemento = document.getElementById(idCaja);
+            if (elemento.style.display !== "block") {
+                alert("❌ Este documento no está aprobado o emitido todavía.");
+                return;
+            }
+            window.print();
+        }
+    </script>
+</body>
+</html>
